@@ -70,7 +70,5 @@ def send_mail(dbs_creds,table):
     email_session.quit()
 
 if __name__ == "__main__":
-    # print(read_dbs_creds("saved"))
+    # print(read_mail_creds())
     print("foobar")
-    # attendance_from_csv("saved","foobar.csv","2","jan")
-    # calc_point("saved","2","jan")
