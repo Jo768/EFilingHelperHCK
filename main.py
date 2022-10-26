@@ -10,7 +10,7 @@ colours=["#2A2F32","#0D8ABF","#02C39A"]
 
 window=tkinterDnD.Tk()
 window.geometry("600x600")
-window.title("HCK E-FILING HELPER")
+window.title("E-FILING HELPER HCK")
 window.configure(bg=colours[0])
 window.resizable(height=0, width=0)
 window.iconbitmap("assets/app_icon.ico")
