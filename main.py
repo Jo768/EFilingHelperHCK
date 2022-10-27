@@ -221,24 +221,8 @@ def mail_ui():
     cred_type=""
 
     def mail_destroy():
-        use_tmp_creds_button.place_forget()
-        use_saved_creds_button.place_forget()
         back_button.place_forget()
-        select_table_label.place_forget()
-        select_table.place_forget()
         mail_button.place_forget()
-        try:
-            host_label.place_forget()
-            host_input.place_forget()
-            user_label.place_forget()
-            user_input.place_forget()
-            pass_label.place_forget()
-            pass_input.place_forget()
-            dbs_label.place_forget()
-            dbs_input.place_forget()
-            connect_button.place_forget()
-        except:
-            pass
 
     def back():
         mail_destroy()
@@ -246,57 +230,13 @@ def mail_ui():
 
     def mail():
         global cred_type
-        table=tables.get()
-        table=table_name(table)
         try:
-            send_mail(cred_type,table)
+            send_mail(cred_type)
         except:
             retry_label.config(text="Please check your\nEmail credentials")
             retry_label.place(x=180, y=530)
 
-    def use_saved_creds():
-        global cred_type
-        host,user,password,database=read_dbs_creds("saved")
         try:
-            dbs_connect(host, user, password, database)
-            connection_label.config(text="CONNECTION ESTABLISHED")
-            connection_label.place(x=180, y=530)
-            mail_button.config(state="active")
-            cred_type="saved"
-            window.after(3000, connection_label.place_forget)
-        except Exception as e:
-            connection_label.config(text="SOMETHING WENT WRONG\nPLEASE TRY AGAIN")
-            connection_label.place(x=180, y=530)
-            window.after(3000, connection_label.place_forget)
-
-        return cred_type
-
-    def use_tmp_creds():
-        use_tmp_creds_button.place_forget()
-        host_label.place(x=100, y=80)
-        host_input.place(x=240, y=80)
-        user_label.place(x=100, y=140)
-        user_input.place(x=240, y=140)
-        pass_label.place(x=100, y=200)
-        pass_input.place(x=240, y=200)
-        dbs_label.place(x=100, y=260)
-        dbs_input.place(x=240, y=260)
-        connect_button.place(x=280, y=300)
-
-    def enter():
-        global cred_type
-        host=host_input.get()
-        host_input.delete(0, 'end')
-        user=user_input.get()
-        user_input.delete(0, 'end')
-        password=pass_input.get()
-        pass_input.delete(0, 'end')
-        dbs=dbs_input.get()
-        dbs_input.delete(0, 'end')
-
-        try:
-            dbs_connect(host, user, password, dbs)
-            dbs_write_to_bin(1,host, user, password, dbs)
             connection_label.config(text="CONNECTION ESTABLISHED")
             connection_label.place(x=180, y=530)
             mail_button.config(state="active")
@@ -309,34 +249,12 @@ def mail_ui():
         
         return cred_type
 
-    table_options =["Raw attendance","Points","Monthly attendance"]
-    tables = StringVar()
-    tables.set( "Raw attendance" )
-
-    select_table_label=tk.Label(window, text="Mail\t\t\t    table", font=("Roboto", 15, 'bold'), bg=colours[0], fg=colours[2])
-    select_table=tk.OptionMenu(window, tables, *table_options)
-    select_table.config(bg=colours[1],font=("Roboto" , 10, 'bold'))
-    host_label=tk.Label(window, text="HOST: ",font=("Roboto" , 12, 'bold'), bg=colours[0], fg=colours[1])
-    host_input=tk.Entry(window, font=("Roboto" , 12, 'bold'), width=24)
-    user_label=tk.Label(window, text="USER: ",font=("Roboto" , 12, 'bold'), bg=colours[0], fg=colours[1])
-    user_input=tk.Entry(window, font=("Roboto" , 12, 'bold'), width=24)
-    pass_label=tk.Label(window, text="PASSWORD: ",font=("Roboto" , 12, 'bold'), bg=colours[0], fg=colours[1])
-    pass_input=tk.Entry(window,show="*", font=("Roboto" , 12, 'bold'), width=24)
-    dbs_label=tk.Label(window, text="DATABASE: ",font=("Roboto" , 12, 'bold'), bg=colours[0], fg=colours[1])
-    dbs_input=tk.Entry(window, font=("Roboto" , 12, 'bold'), width=24)
-    connect_button=tk.Button(window,command=enter, text="CONNECT", font=("Roboto" , 10, 'bold') , bg=colours[1], activebackground=colours[2])
     connection_label=tk.Label(window,font=("Roboto" , 12, 'bold'), bg=colours[0], fg=colours[2])
     retry_label=tk.Label(window,font=("Roboto" , 12, 'bold'), bg=colours[0], fg=colours[2])
-    use_tmp_creds_button=tk.Button(window,command=use_tmp_creds, text="USE TEMPORARY CREDS",font=("Roboto" , 10, 'bold') , bg=colours[1], activebackground=colours[2])
-    use_saved_creds_button=tk.Button(window,command=use_saved_creds, text="USE SAVED CREDS",font=("Roboto" , 10, 'bold') , bg=colours[1], activebackground=colours[2])
     back_button=tk.Button(window,command= back, text="Back",font=("Roboto" , 11, 'bold') , bg=colours[1], activebackground=colours[2])
     mail_button=tk.Button(window,command= mail, state="disabled", text="MAIL",font=("Roboto" , 13, 'bold') , bg=colours[1], activebackground=colours[2])
 
-    use_tmp_creds_button.place(x=230, y=50) 
-    use_saved_creds_button.place(x=245, y=350) 
     back_button.place(x=10, y=10) 
-    select_table_label.place(x=170, y=390)
-    select_table.place(x=260, y=390)
     mail_button.place(x=270, y=440) 
 
     CreateToolTip(back_button, text="Back to Main Menu")
